@@ -3,7 +3,7 @@ from copy import deepcopy
 from random import choice, randrange
 
 
-def check_borders(num):
+def check(num):
     if figure[num].x < 0 or figure[num].x > W - 1:
         return False
     elif figure[num].y > H - 1 or field[figure[num].y][figure[num].x]:
@@ -18,6 +18,7 @@ def simple_game():
     global next_color
     global next_figure
     global figure
+
     dx, rotate = 0, False
     sc.blit(bg, (0, 0))
     sc.blit(game_sc, (20, 20))
@@ -44,7 +45,7 @@ def simple_game():
     figure_old = deepcopy(figure)
     for num in range(4):
         figure[num].x += dx
-        if not check_borders(num):
+        if not check(num):
 
             figure = deepcopy(figure_old)
             break
@@ -55,7 +56,7 @@ def simple_game():
         figure_old = deepcopy(figure)
         for i in range(4):
             figure[i].y += 1
-            if not check_borders(i):
+            if not check(i):
                 for i in range(4):
                     field[figure_old[i].y][figure_old[i].x] = color
                 figure, color = next_figure, next_color
@@ -71,7 +72,7 @@ def simple_game():
             y = figure[i].x - center.x
             figure[i].x = center.x - x
             figure[i].y = center.y + y
-            if not check_borders(i):
+            if not check(i):
                 figure = deepcopy(figure_old)
                 break
 
